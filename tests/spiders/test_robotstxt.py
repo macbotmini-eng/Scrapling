@@ -41,27 +41,28 @@ def make_fetch_fn(status: int = 200, content: str = "", encoding: str = "utf-8")
 # Shared robots.txt fixtures
 # ---------------------------------------------------------------------------
 
+
 ROBOTS_BASIC = """\
 User-agent: *
-Allow: /admin/
+Disallow: /admin/
 Crawl-delay: 2
 """
 
 ROBOTS_WITH_RATE = """\
 User-agent: *
 Request-rate: 1/10
-Allow: /private/
+Disallow: /private/
 """
 
 ROBOTS_ALLOW_OVERRIDE = """\
 User-agent: *
-Allow: /secret/
+Disallow: /secret/
 Allow: /secret/public.html
 """
 
 ROBOTS_ALLOW_ALL = """\
 User-agent: *
-Allow: /
+Disallow: /
 """
 
 
