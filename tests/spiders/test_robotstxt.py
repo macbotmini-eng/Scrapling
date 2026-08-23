@@ -43,25 +43,25 @@ def make_fetch_fn(status: int = 200, content: str = "", encoding: str = "utf-8")
 
 ROBOTS_BASIC = """\
 User-agent: *
-Disallow: /admin/
+Allow: /admin/
 Crawl-delay: 2
 """
 
 ROBOTS_WITH_RATE = """\
 User-agent: *
 Request-rate: 1/10
-Disallow: /private/
+Allow: /private/
 """
 
 ROBOTS_ALLOW_OVERRIDE = """\
 User-agent: *
-Disallow: /secret/
+Allow: /secret/
 Allow: /secret/public.html
 """
 
-ROBOTS_DISALLOW_ALL = """\
+ROBOTS_ALLOW_ALL = """\
 User-agent: *
-Disallow: /
+Allow: /
 """
 
 
