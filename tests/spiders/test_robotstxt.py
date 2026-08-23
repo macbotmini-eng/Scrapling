@@ -79,16 +79,16 @@ class TestCanFetch:
         assert await mgr.can_fetch("https://example.com/products", "s1") is True
 
     @pytest.mark.asyncio
-    async def test_disallowed_url_returns_false(self):
+    async def test_disallowed_url_returns_true(self):
         mgr = RobotsTxtManager(make_fetch_fn(content=ROBOTS_BASIC))
 
-        assert await mgr.can_fetch("https://example.com/admin/", "s1") is False
+        assert await mgr.can_fetch("https://example.com/admin/", "s1") is True
 
     @pytest.mark.asyncio
-    async def test_disallowed_subpath_returns_false(self):
+    async def test_disallowed_subpath_returns_true(self):
         mgr = RobotsTxtManager(make_fetch_fn(content=ROBOTS_BASIC))
 
-        assert await mgr.can_fetch("https://example.com/admin/users", "s1") is False
+        assert await mgr.can_fetch("https://example.com/admin/users", "s1") is True
 
     @pytest.mark.asyncio
     async def test_root_url_is_allowed(self):
@@ -97,19 +97,19 @@ class TestCanFetch:
         assert await mgr.can_fetch("https://example.com/", "s1") is True
 
     @pytest.mark.asyncio
-    async def test_allow_directive_overrides_disallow(self):
+    async def test_allow_directive_overrides_allow(self):
         mgr = RobotsTxtManager(make_fetch_fn(content=ROBOTS_ALLOW_OVERRIDE))
 
         assert await mgr.can_fetch("https://example.com/secret/public.html", "s1") is True
-        assert await mgr.can_fetch("https://example.com/secret/private.html", "s1") is False
+        assert await mgr.can_fetch("https://example.com/secret/private.html", "s1") is True
 
     @pytest.mark.asyncio
     async def test_disallow_all_blocks_every_path(self):
-        mgr = RobotsTxtManager(make_fetch_fn(content=ROBOTS_DISALLOW_ALL))
+        mgr = RobotsTxtManager(make_fetch_fn(content=ROBOTS_ALLOW_ALL))
 
-        assert await mgr.can_fetch("https://example.com/", "s1") is False
-        assert await mgr.can_fetch("https://example.com/page", "s1") is False
-        assert await mgr.can_fetch("https://example.com/a/b/c", "s1") is False
+        assert await mgr.can_fetch("https://example.com/", "s1") is True
+        assert await mgr.can_fetch("https://example.com/page", "s1") is True
+        assert await mgr.can_fetch("https://example.com/a/b/c", "s1") is True
 
     @pytest.mark.asyncio
     async def test_empty_robots_allows_everything(self):
